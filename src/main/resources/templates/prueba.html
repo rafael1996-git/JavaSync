@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<script src=" https://unpkg.com/sweetalert/dist/sweetalert.min.js "></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+	integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+	crossorigin="anonymous">
+<link rel="stylesheet"
+	href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+	integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU"
+	crossorigin="anonymous">
+<!--   <link rel="stylesheet" type="text/css"  th:href="@{/resources/css/admin.css}" /> -->
+<style type="text/css">
+.my-custom-scrollbar {
+	position: relative;
+	height: 200px;
+	overflow: auto;
+}
+
+.table-wrapper-scroll-y {
+	display: block;
+}
+
+.searchbar {
+	margin-bottom: auto;
+	margin-top: auto;
+	height: 60px;
+	background-color: #353b48;
+	border-radius: 30px;
+	padding: 10px;
+}
+
+.search_input {
+	color: white;
+	border: 0;
+	outline: 0;
+	background: none;
+	width: 0;
+	caret-color: transparent;
+	line-height: 40px;
+	transition: width 0.4s linear;
+}
+
+.searchbar:hover>.search_input {
+	padding: 0 10px;
+	width: 450px;
+	caret-color: red;
+	transition: width 0.4s linear;
+}
+
+.searchbar:hover>.search_icon {
+	background: white;
+	color: #e74c3c;
+}
+
+.search_icon {
+	height: 40px;
+	width: 40px;
+	float: right;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+	color: white;
+	text-decoration: none;
+}
+</style>
+<title>Postgres Sync</title>
+</head>
+<body>
+
+	<div class="container-fluid">
+		<div class="row">
+
+			<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+				<ul class="navbar-nav">
+					<li class="nav-item active"><a class="nav-link" th:href="@{/home2}">Home</a>
+					</li>
+
+				</ul>
+			</nav>
+			<div class="col-sm-6 text-center">
+				<div class="card bg-light">
+
+					<div class="card-body">
+						<h2>Local</h2>
+						<p>Buscar Datos locales :</p>
+
+						<div class="container my-3">
+							<div class="d-flex justify-content-center h-100">
+								<div class="searchbar">
+									<input class="search_input" id="tableSearch" type="text"
+										name="" placeholder="Search..."> <a href="#"
+										class="search_icon"><i class="fas fa-search"></i></a>
+								</div>
+							</div>
+						</div>
+						<div class="container mt-5 mb-5">
+
+							<div class="card border-dark mb-3">
+								<div class="card-header">Base Geoloc</div>
+								<div class="card-body text-dark">
+									<h5 class="card-title">Listado de Tablas </h5>
+									<div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+										<table class="table table-dark table-hover">
+											<thead>
+												<tr>
+													<th>Table-Detalle</th>
+												</tr>
+											</thead>
+											<tbody id="myTable">
+
+												<tr th:each="dato,iterador: ${ListaLocales}">
+													<td th:text="${dato}"></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+			<div class="col-sm-6 text-center">
+				<div class="card bg-light">
+
+					<div class="card-body">
+						<h2>Remotos</h2>
+						<p>Buscar Datos Remotos:</p>
+
+						<div class="container my-3">
+							<div class="d-flex justify-content-center h-100">
+								<div class="searchbar">
+									<input class="search_input" id="tableSearch2" type="text"
+										name="" placeholder="Search..."> <a href="#"
+										class="search_icon"><i class="fas fa-search"></i></a>
+								</div>
+							</div>
+						</div>
+						<div class="container mt-5 mb-5">
+
+							<div class="card border-dark mb-3">
+								<div class="card-header">Base Geoloc</div>
+								<div class="card-body text-dark">
+									<h5 class="card-title">Listado de Tablas </h5>
+									<div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+										<table class="table table-dark table-hover">
+											<thead>
+												<tr>
+													<th>Table-Detalle</th>
+												</tr>
+											</thead>
+											<tbody id="myTable2">
+
+												<tr th:each="dato,iterador: ${ListaRemotos}">
+													<td th:text="${dato}"></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+		</div>
+	
+		<div class="row my-5">
+
+			<div class="col-sm-12 text-center">
+				<div class="card bg-light">
+
+					<div class="card-body">
+						<h4 class="card-title">
+							<a th:href="@{/sync/} + ${NameTable}" class="btn btn-primary btn-xs">
+								sincronizar</a>
+						</h4>
+						<h2>Resultados </h2>
+						<p>Resultados Datos Diferentes :</p>
+						<div class="container my-3">
+							<div class="d-flex justify-content-center h-100">
+								<div class="searchbar">
+									<input class="search_input" id="tableSearch3" type="text"
+										name="" placeholder="Search..."> <a href="#"
+										class="search_icon"><i class="fas fa-search"></i></a>
+								</div>
+							</div>
+						</div>
+						<div class="table-wrapper-scroll-y my-custom-scrollbar">
+
+										<table class="table table-dark table-hover">
+											<thead>
+												<tr>
+													<th>Table-Detalle</th>
+												</tr>
+											</thead>
+											<tbody id="myTable2">
+
+												<tr th:each="dato,iterador: ${ListaDiff}">
+													<td th:text="${dato}"></td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+	<div class="container-fluid my-5">
+		<div class="row">
+			<div class="col-sm-12">
+				<!-- Footer -->
+				<footer class="text-center text-lg-start text-white"
+					style="background-color: #1c2331">
+					<!-- Section: Social media -->
+					<section class="d-flex justify-content-between p-4"
+						style="background-color: #6351ce">
+						<!-- Left -->
+						<div class="me-5">
+							<span>Get connected with us on social networks:</span>
+						</div>
+						<!-- Left -->
+
+						<!-- Right -->
+						<div>
+							<a href="" class="text-white me-4"> <i
+								class="fab fa-facebook-f"></i>
+							</a> <a href="" class="text-white me-4"> <i
+								class="fab fa-twitter"></i>
+							</a> <a href="" class="text-white me-4"> <i class="fab fa-google"></i>
+							</a> <a href="" class="text-white me-4"> <i
+								class="fab fa-instagram"></i>
+							</a> <a href="" class="text-white me-4"> <i
+								class="fab fa-linkedin"></i>
+							</a> <a href="" class="text-white me-4"> <i class="fab fa-github"></i>
+							</a>
+						</div>
+						<!-- Right -->
+					</section>
+					<!-- Section: Social media -->
+
+					<!-- Section: Links  -->
+					<section class="">
+						<div class="container text-center text-md-start mt-12">
+							<!-- Grid row -->
+							<div class="row mt-3">
+								<!-- Grid column -->
+								<div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+									<!-- Content -->
+									<h6 class="text-uppercase fw-bold">Company name</h6>
+									<hr class="mb-4 mt-0 d-inline-block mx-auto"
+										style="width: 60px; background-color: #7c4dff; height: 2px" />
+									<p>© Derechos reservados Instituto Nacional Electoral,
+										México.</p>
+								</div>
+								<!-- Grid column -->
+
+								<!-- Grid column -->
+								<div class="col-md-2 col-lg-2 col-xl-2 mx-auto mb-4">
+									<!-- Links -->
+									<h6 class="text-uppercase fw-bold">Products</h6>
+									<hr class="mb-4 mt-0 d-inline-block mx-auto"
+										style="width: 60px; background-color: #7c4dff; height: 2px" />
+									<p>
+										<a href="#!" class="text-white">Demo 0.0.1</a>
+									</p>
+
+								</div>
+								<!-- Grid column -->
+
+								<!-- Grid column -->
+								<div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+									<!-- Links -->
+									<h6 class="text-uppercase fw-bold">Useful links</h6>
+									<hr class="mb-4 mt-0 d-inline-block mx-auto"
+										style="width: 60px; background-color: #7c4dff; height: 2px" />
+
+									<p>
+										<a href="https://www.ine.mx/" class="text-white">Help </a>
+									</p>
+								</div>
+								<!-- Grid column -->
+
+								<!-- Grid column -->
+								<div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+									<!-- Links -->
+									<h6 class="text-uppercase fw-bold">Contact</h6>
+									<hr class="mb-4 mt-0 d-inline-block mx-auto"
+										style="width: 60px; background-color: #7c4dff; height: 2px" />
+									<p>
+										<i class="fas fa-home mr-3"></i> CDMX, INE Quantum, Boulevard
+										Adolfo López Mateos, Ampliacion Los Alpes, Ciudad de México,
+										CDMX
+									</p>
+									<p>
+										<i class="fas fa-envelope mr-3"></i> rafael.quinto@ine.mx
+									</p>
+									<p>
+										<i class="fas fa-phone mr-3"></i> +55 5490 9000
+									</p>
+									<p>
+										<i class="fas fa-print mr-3"></i> +733 189 44 25
+									</p>
+								</div>
+								<!-- Grid column -->
+							</div>
+							<!-- Grid row -->
+						</div>
+					</section>
+					<!-- Section: Links  -->
+
+					<!-- Copyright -->
+					<div class="text-center p-3"
+						style="background-color: rgba(0, 0, 0, 0.2)">
+						© 2022 Copyright: <a class="text-white" href="https://ine.com/">rafael.quinto@ine.mx</a>
+					</div>
+				</footer>
+				<!-- Footer -->
+			</div>
+		</div>
+
+
+	</div>
+
+</body>
+<script type="text/javascript">
+	$(document).ready(
+			function() {
+				$("#tableSearch").on(
+						"keyup",
+						function() {
+							var value = $(this).val().toLowerCase();
+							$("#myTable tr").filter(
+									function() {
+										$(this).toggle(
+												$(this).text().toLowerCase()
+														.indexOf(value) > -1)
+									});
+						});
+			});
+	$(document).ready(
+			function() {
+				$("#tableSearch2").on(
+						"keyup",
+						function() {
+							var value = $(this).val().toLowerCase();
+							$("#myTable2 tr").filter(
+									function() {
+										$(this).toggle(
+												$(this).text().toLowerCase()
+														.indexOf(value) > -1)
+									});
+						});
+			});
+</script>
+
+</html>
